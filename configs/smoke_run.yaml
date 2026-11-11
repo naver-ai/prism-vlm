@@ -1,0 +1,27 @@
+# PRISM-VLM
+# Copyright (c) 2026-present NAVER Cloud Corp.
+# Apache-2.0
+#
+# Smoke run: 1 item per benchmark, 1 seed -> 15 items.
+#
+# Exercises every loader, every generation prompt and every grading prompt at
+# roughly 1/500 of the cost. Needs OPENAI_API_KEY, plus whatever the evaluee you
+# pass to `--models` requires.
+
+run_id: smoke
+R: 1
+
+concurrency: 3
+judge_concurrency: 3
+
+domains: smoke_domains.yaml
+models: models.yaml
+
+judge:
+  model: gpt-5
+  temperature: 0.0
+  effort: low
+
+variant_bundle: ../data_smoke/variants/v1/
+cache_dir: ../cache/runs/
+cache_root: ../cache/hf/

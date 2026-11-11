@@ -1,0 +1,39 @@
+# PRISM-VLM
+# Copyright (c) 2026-present NAVER Cloud Corp.
+# Apache-2.0
+#
+# Full PRISM-VLM run: build the benchmark, then evaluate models on it.
+#
+# Fifteen public benchmarks x 100 items per seed x R=5 seeds, deduplicated
+# within each benchmark, gives 6,238 evaluated rows. (Counted as distinct source
+# items the pool is 6,213: the BLINK-Counting and BLINK rows share 25 items,
+# which carry independently synthesised perturbations under each row.)
+#
+# The per-benchmark count is `sampling.items_per_benchmark` in domains.yaml.
+
+run_id: main_2026_04
+R: 5
+
+concurrency: 16
+judge_concurrency: 32
+concurrency_by_provider:
+  openai: 32
+  openrouter: 16
+  vllm: 32
+
+domains: domains.yaml
+models: models.yaml
+
+# The judge: synthesises the per-item artifacts at build time and grades
+# responses at run time, in separated prompt contexts.
+judge:
+  model: gpt-5
+  temperature: 0.0
+  effort: low
+
+# Per-item artifacts (h/, multi_qa/, counting/, vis/, sc/). Sampled source items
+# and their sidecars land in ../base/ relative to the bundle's parent.
+variant_bundle: ../data/variants/v1/
+
+cache_dir: ../cache/runs/
+cache_root: ../cache/hf/

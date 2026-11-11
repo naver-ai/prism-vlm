@@ -1,0 +1,48 @@
+# PRISM-VLM
+# Copyright (c) 2026-present NAVER Cloud Corp.
+# Apache-2.0
+#
+# Evaluee registry. One entry per model you want to score.
+#
+# The paper evaluates 42 compact models; the three below are a runnable subset,
+# one per provider pattern. Add your own by copying the closest entry.
+#
+# `id` names the model in the run cache and in `prism-vlm score`; `model` is
+# what the provider itself calls it. Reasoning controls are per-provider, and
+# at most one applies to any model:
+#   effort           OpenAI                  minimal | low | medium | high
+#   reasoning        Anthropic               effort level for adaptive thinking
+#                                            (Claude 4.6 and later)
+#   reasoning_budget Anthropic               manual token budget (Claude 4.5
+#                                            and earlier)
+#   thinking         Gemini                  off | low | medium | high
+#                    OpenRouter/vLLM         off (a level is accepted but
+#                                            only `off` changes the request)
+#
+# `concurrency` and `max_tokens` override the run config for one model; both
+# reach every provider. Raise `max_tokens` above `reasoning_budget`, or the
+# Anthropic API rejects the call.
+#
+# vLLM endpoints are deployment-specific and are NOT listed here -- see
+# endpoints.example.yaml.
+
+models:
+  # Self-hosted open weights. Needs an entry in endpoints.yaml or
+  # PRISM_VLLM_ENDPOINT; `model` must match what the server advertises.
+  - id: qwen3-vl-2b_off
+    provider: vllm
+    model: Qwen3-VL-2B-Instruct
+    thinking: "off"
+    concurrency: 16
+
+  # Open weights via a hosted OpenAI-compatible gateway. Needs OPENROUTER_API_KEY.
+  - id: qwen3-vl-8b_off
+    provider: openrouter
+    model: qwen/qwen3-vl-8b-instruct
+    thinking: "off"
+
+  # Closed API. Needs OPENAI_API_KEY.
+  - id: gpt-5-mini-2025-08-07_min
+    provider: openai
+    model: gpt-5-mini-2025-08-07
+    effort: minimal

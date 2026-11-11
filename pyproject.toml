@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prism-vlm"
+version = "0.1.0"
+description = "PRISM-VLM: build the benchmark and evaluate compact vision-language models on it"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Sanghee Park" }]
+
+dependencies = [
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "numpy>=1.26",
+    "datasets>=2.17",
+    "Pillow>=10.2",
+    "openai>=1.40",   # judge, OpenAI/OpenRouter evaluees, and vLLM endpoints
+    "tenacity>=8.2",
+]
+
+[project.optional-dependencies]
+# Needed only to evaluate a model served by that provider.
+anthropic = ["anthropic>=0.34"]
+google = ["google-genai>=0.3"]
+all = ["anthropic>=0.34", "google-genai>=0.3"]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.3",
+    "black>=24.3",
+    "mypy>=1.9",
+]
+
+[project.scripts]
+prism-vlm = "prism_vlm.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["prism_vlm*"]
+
+[tool.setuptools.package-data]
+prism_vlm = ["variants/prompts/*.md", "evaluation/judge_prompts/*.md"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_ignores = true
+warn_return_any = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = ["datasets.*", "google.genai.*", "anthropic.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

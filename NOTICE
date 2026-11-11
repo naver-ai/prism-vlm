@@ -1,0 +1,119 @@
+PRISM-VLM
+Copyright (c) 2026-present NAVER Cloud Corp.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+===
+
+Data provenance
+---------------
+PRISM-VLM recycles items from the fifteen public benchmarks below. This
+repository redistributes no benchmark images, questions or gold answers.
+`prism-vlm build` and `prism-vlm run` fetch fourteen of them from the
+HuggingFace Hub at run time, on the user's own machine. NLVR2 is not fetched:
+its authors give the images only to researchers who request them, so the user
+obtains it from them directly (see README -> NLVR2).
+
+Before the first download, `build` and `run` print the terms below and ask the
+user to accept them (`--accept-dataset-terms` accepts them non-interactively).
+
+Disclaimer. The terms below summarise the conditions that each original author
+published, as of 2026-10-01. They are provided for reference only. NAVER Cloud
+Corp. makes no warranty that they are accurate, complete or current. The
+original authors' current terms take precedence over this summary. Each source
+stays under its own license and terms of use, including the terms attached to
+the underlying images, and users are responsible for complying with them. The
+license of this software (Apache-2.0) does not extend to any source benchmark.
+
+Non-commercial sources. ScienceQA, part of MMStar (items drawn from SEED-Bench
+and ScienceQA), and the benchmarks whose images come from Flickr via MS COCO
+(GQA, OK-VQA, RefCOCOg, RefCOCO+) do not permit commercial use. Do not use
+results computed on them for commercial purposes, including the development of
+commercial models.
+
+  id            benchmark       obtained from
+                original source / terms as published by the original authors
+  mmstar        MMStar          HF Lin-Chen/MMStar, split val
+                https://github.com/MMStar-Benchmark/MMStar
+                no license stated; items inherit the terms of the benchmark
+                each was drawn from, some non-commercial
+  gqa           GQA             HF lmms-lab/gqa, split testdev, subset balanced
+                https://cs.stanford.edu/people/dorarad/gqa/
+                annotations CC BY 4.0; images from Flickr, no commercial use
+  okvqa         OK-VQA          HF Multimodal-Fatima/OK-VQA_test, split test
+                https://okvqa.allenai.org/
+                no license stated; images from Flickr, no commercial use
+  mmmu          MMMU            HF MMMU/MMMU, split validation, all subjects
+                https://mmmu-benchmark.github.io/
+                Apache-2.0
+  mathvista     MathVista       HF AI4Math/MathVista, split testmini
+                https://mathvista.github.io/
+                CC BY-SA 4.0 for new contributions; source items stay with
+                their original authors
+  scienceqa     ScienceQA       HF derek-thomas/ScienceQA, split test
+                https://scienceqa.github.io/
+                CC BY-NC-SA 4.0, non-commercial research only
+  ai2d          AI2D            HF lmms-lab/ai2d, split test
+                https://allenai.org/data/diagrams
+                CC BY-SA 4.0
+  chartqa       ChartQA         HF lmms-lab/ChartQA, split test
+                https://github.com/vis-nlp/ChartQA
+                GPL-3.0; charts from Statista, Pew Research, Our World in Data
+                and OECD, whose own terms also apply
+  docvqa        DocVQA          HF lmms-lab/DocVQA, split validation, subset DocVQA
+                https://www.docvqa.org/
+                no license granted; images from the UCSF Industry Documents
+                Library, whose rights holders keep their copyright
+  refcocog      RefCOCOg        HF lmms-lab/RefCOCOg, split val
+                https://github.com/lichengunc/refer
+                no license stated for annotations; images from Flickr, no
+                commercial use
+  refcocoplus   RefCOCO+        HF lmms-lab/RefCOCOplus, split testA
+                https://github.com/lichengunc/refer
+                no license stated for annotations; images from Flickr, no
+                commercial use
+  tallyqa       BLINK Counting  HF BLINK-Benchmark/BLINK, split val, subset Counting
+                https://zeyofu.github.io/blink/
+                Apache-2.0
+  mantis        Mantis-Eval     HF TIGER-Lab/Mantis-Eval, split test, subset mantis_eval
+                https://tiger-ai-lab.github.io/Mantis/
+                Apache-2.0
+  mmt_bench     NLVR2           the original authors, on request (balanced test-P)
+                https://lil.nlp.cornell.edu/nlvr/
+                images not publicly distributed; research use only, under the
+                terms the authors attach to the request
+  blink         BLINK           HF BLINK-Benchmark/BLINK, split val, all subtasks
+                https://zeyofu.github.io/blink/
+                Apache-2.0
+
+Some Hub copies above were uploaded by third parties and show a license that
+differs from the original authors' terms. The original authors' terms apply.
+
+Two ids are historical. TallyQA is not available on the Hub and its slot is
+filled by BLINK Counting; MMT-Bench's slot is filled by NLVR2. The ids are
+hashed into every item id, so they cannot be renamed without invalidating the
+pool.
+
+The prompt templates under `prism_vlm/variants/prompts/` and
+`prism_vlm/evaluation/judge_prompts/` are released under CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/).
+
+Third-party dependencies
+------------------------
+Apache-2.0    datasets, openai, tenacity, google-genai (optional extra)
+MIT           pydantic, PyYAML, anthropic (optional extra)
+MIT-CMU       Pillow
+BSD-3-Clause  numpy
+
+Each dependency stays under its own license; users must comply with those
+terms when using this software.

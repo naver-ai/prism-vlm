@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Secrets
+.env
+*.key
+
+# Build products: the sampled item pool, the synthesised artifact bundle,
+# and the HuggingFace dataset cache. Regenerate with `prism-vlm build`.
+/data/
+/data_smoke/
+/cache/
+
+# Scoring reports written by `prism-vlm score --output`.
+/outputs/
+
+# Deployment-specific vLLM endpoints.
+configs/endpoints.yaml

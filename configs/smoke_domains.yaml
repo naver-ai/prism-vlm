@@ -1,0 +1,26 @@
+# PRISM-VLM
+# Copyright (c) 2026-present NAVER Cloud Corp.
+# Apache-2.0
+#
+# Mirrors domains.yaml, sampling 1 item per benchmark so the smoke build
+# exercises every loader and every generation prompt at negligible cost.
+# Keep the domain lists identical: item ids are keyed on the benchmark id.
+#
+# A benchmark is named by id alone. The id selects a loader from
+# prism_vlm/data/hf_loaders.py, which owns the source, split, subset and
+# preprocessing for that benchmark -- NOTICE lists the source of each one.
+#
+# The id is hashed into every item id, so it is a cache key. `tallyqa` and
+# `mmt_bench` keep legacy names for that reason: TallyQA is not on the Hub and
+# is substituted by BLINK Counting, MMT-Bench by NLVR2. Renaming either would
+# invalidate the whole pool.
+
+domains:
+  general_vqa:    [mmstar, gqa, okvqa]
+  math_reasoning: [mmmu, mathvista, scienceqa]
+  chart_document: [ai2d, chartqa, docvqa]
+  grounding:      [refcocog, refcocoplus, tallyqa]
+  multi_image:    [mantis, mmt_bench, blink]
+
+sampling:
+  items_per_benchmark: 1
